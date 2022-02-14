@@ -49,15 +49,17 @@ function initDragEvents() {
     ui.slots.forEach(function (slot) {
         initDropzone(slot);
     });
+    
 }
 
 function initDraggable(draggable) {
-    draggable.setAttribute("draggable", true);
+    //draggable.setAttribute("draggable", true);
     draggable.addEventListener("dragstart", handleDragStart);
     draggable.addEventListener("dragend", handleDragEnd);
 }
 
 function initDropzone(dropzone) {
+
     dropzone.addEventListener("dragenter", handleDragEnter);
     dropzone.addEventListener("dragover", handleDragOver);
     dropzone.addEventListener("dragleave", handleDragLeave);
@@ -66,10 +68,20 @@ function initDropzone(dropzone) {
 
 function handleDragStart(e) {
     game.dragged = e.currentTarget;
+    ui.slots.forEach(function(slot){
+        slot.classList.add("dragging")
+            });
+    //setDropZonesHighlight();
     console.log("Drag start of", game.dragged);
 }
 
 function handleDragEnd() {
+    ui.slots.forEach(function(slot){
+        slot.classList.remove("dragging")
+            });
+    let newCardSlot = document.createElement("div");
+    newCardSlot.classList.add("card-slot")
+    ui.mixedCardsContainer.appendChild(newCardSlot);
     console.log("Drag end of", game.dragged);
     game.dragged = null;
 }
@@ -98,5 +110,18 @@ function handleDrop(e) {
         }
     }
 }
+
+// function setDropZonesHighlight(highlight = true) {
+//     const dropZones = document.querySelectorAll(".card-slot");
+//     for (const dropZone of dropZones) {
+//         if (highlight) {
+//             dropZone.classList.add("active-zone");
+//         } else {
+//             dropZone.classList.remove("active-zone");
+//             dropZone.classList.remove("over-zone");
+//         }
+//     }
+// }
+
 
 initDragAndDrop();
