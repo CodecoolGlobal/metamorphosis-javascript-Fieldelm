@@ -59,7 +59,7 @@ function initDragEvents() {
 }
 
 function initDraggable(draggable) {
-    //draggable.setAttribute("draggable", true);
+    draggable.setAttribute("draggable", true);
     draggable.addEventListener("dragstart", handleDragStart);
     draggable.addEventListener("dragstart", visualDragStart);
 
@@ -95,18 +95,23 @@ function handleDragEnd() {
 
 function handleDragOver(e) {
     e.preventDefault();
+   
 }
 
 function handleDragEnter(e) {
+    e.currentTarget.classList.add("cardEntering")
     console.log("Drag enter of", e.currentTarget);
 }
 
 function handleDragLeave(e) {
+    e.currentTarget.classList.remove("cardEntering")
     console.log("Drag leave of", e.currentTarget);
+    
 }
 
 function handleDrop(e) {
     e.preventDefault();
+    e.currentTarget.classList.remove("cardEntering")
     const dropzone = e.currentTarget;
     console.log("Drop of", dropzone);
       
