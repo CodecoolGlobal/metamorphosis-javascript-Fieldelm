@@ -11,6 +11,8 @@ const ui = {
     mixedCardsContainer: null,
     slots: null,
     cards: null,
+    cardsAmount: 8
+    
 };
 
 const game = {
@@ -21,6 +23,9 @@ function initDragAndDrop() {
     initElements();
     shuffleCards();
     initDragEvents();
+    
+    
+    
 }
 
 function initElements() {
@@ -30,6 +35,7 @@ function initElements() {
 
     ui.cards.forEach(function (card) {
         card.setAttribute("draggable", true);
+    
     });
 }
 
@@ -56,7 +62,7 @@ function initDraggable(draggable) {
     //draggable.setAttribute("draggable", true);
     draggable.addEventListener("dragstart", handleDragStart);
     draggable.addEventListener("dragend", handleDragEnd);
-}
+    }
 
 function initDropzone(dropzone) {
 
@@ -64,6 +70,7 @@ function initDropzone(dropzone) {
     dropzone.addEventListener("dragover", handleDragOver);
     dropzone.addEventListener("dragleave", handleDragLeave);
     dropzone.addEventListener("drop", handleDrop);
+    dropzone.addEventListener("drop", checkCardContainer)
 }
 
 function handleDragStart(e) {
@@ -79,9 +86,7 @@ function handleDragEnd() {
     ui.slots.forEach(function(slot){
         slot.classList.remove("dragging")
             });
-    let newCardSlot = document.createElement("div");
-    newCardSlot.classList.add("card-slot")
-    ui.mixedCardsContainer.appendChild(newCardSlot);
+    
     console.log("Drag end of", game.dragged);
     game.dragged = null;
 }
@@ -102,26 +107,27 @@ function handleDrop(e) {
     e.preventDefault();
     const dropzone = e.currentTarget;
     console.log("Drop of", dropzone);
-
+      
     if (dom.hasClass(dropzone, "card-slot")) {
         if (dom.isEmpty(dropzone)) {
             dropzone.appendChild(game.dragged);
+            
             return;
         }
     }
+    
 }
 
-// function setDropZonesHighlight(highlight = true) {
-//     const dropZones = document.querySelectorAll(".card-slot");
-//     for (const dropZone of dropZones) {
-//         if (highlight) {
-//             dropZone.classList.add("active-zone");
-//         } else {
-//             dropZone.classList.remove("active-zone");
-//             dropZone.classList.remove("over-zone");
-//         }
-//     }
-// }
+function getDropzoneInCardContainer(){
+        let newSlot = document.createElement("div")
+        newSlot.className = "card-slot"
+        ui.mixedCardsContainer.appendChild(newSlot)
+        initDropzone(newSlot)
+}
 
+function checkCardContainer(){
+  if (ui.mixedCardsContainer.childElementCount<ui.cardsAmount){
+        getDropzoneInCardContainer()}
+}
 
 initDragAndDrop();
