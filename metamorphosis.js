@@ -19,13 +19,24 @@ const game = {
     dragged: null,
 };
 
+
 function initDragAndDrop() {
+    
     initElements();
     shuffleCards();
     initDragEvents();
     
-    
-    
+    // if (document.querySelectorAll(".frog .butterfly").length === ui.cardsAmount){
+    //     if (checkWin()){
+    //         win
+    //     }
+    // }
+}
+
+function win(){
+    alert("Congrats, you won!")
+    window.location.reload()
+
 }
 
 function initElements() {
@@ -74,6 +85,7 @@ function initDropzone(dropzone) {
     dropzone.addEventListener("dragleave", handleDragLeave);
     dropzone.addEventListener("drop", handleDrop);
     dropzone.addEventListener("drop", checkCardContainer);
+    dropzone.addEventListener("drop", checkWin)
     
 }
 
@@ -204,4 +216,24 @@ function visualDragEnd(){
 
 }
 
+function checkWin(){
+    
+    let placedCards = document.querySelector(".life-cycles").querySelectorAll("img");
+    
+    let rightOrder = ["1","2","3","4","1","2","3","4"]
+    let placedCardsOrder =[]
+    if (placedCards.length === ui.cardsAmount){   
+    for (let x of placedCards){
+        placedCardsOrder.push(x.src.charAt(30))
+    }
+    }
+    if (JSON.stringify(rightOrder) === JSON.stringify(placedCardsOrder)){
+        win()
+    }
+
+}
+
+
+
 initDragAndDrop();
+
