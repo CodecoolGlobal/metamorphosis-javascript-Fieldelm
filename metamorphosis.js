@@ -32,11 +32,10 @@ function initElements() {
     ui.cards = document.querySelectorAll(".card");
     ui.slots = document.querySelectorAll(".card-slot");
     ui.mixedCardsContainer = document.querySelector(".mixed-cards");
-
     ui.cards.forEach(function (card) {
         card.setAttribute("draggable", true);
-    
     });
+    distinguishDropzones();
 }
 
 function shuffleCards() {
@@ -79,9 +78,11 @@ function initDropzone(dropzone) {
 }
 
 function handleDragStart(e) {
+    
     game.dragged = e.currentTarget;
     
     console.log("Drag start of", game.dragged);
+   
 }
 
 function handleDragEnd() {
@@ -94,6 +95,7 @@ function handleDragEnd() {
 }
 
 function handleDragOver(e) {
+           
     e.preventDefault();
    
 }
@@ -110,24 +112,72 @@ function handleDragLeave(e) {
 }
 
 function handleDrop(e) {
-    e.preventDefault();
+    e.preventDefault()
     e.currentTarget.classList.remove("cardEntering")
     const dropzone = e.currentTarget;
     console.log("Drop of", dropzone);
-      
-    if (dom.hasClass(dropzone, "card-slot")) {
-        if (dom.isEmpty(dropzone)) {
+   if (dom.hasClass(dropzone, "card-slot")&& dom.isEmpty(dropzone)) {
+    if (e.currentTarget.classList.contains("frog")){
+        if (game.dragged.children[0].src.includes("images/f")){
             dropzone.appendChild(game.dragged);
-            
+            return;
+        }else{
+            alert("You can't place this card here!")
+        }
+        
+    }else if(e.currentTarget.classList.contains("butterfly")){
+        if(game.dragged.children[0].src.includes("images/f")){
+            alert("You can't place this card here!")
+        }else{
+            dropzone.appendChild(game.dragged);
             return;
         }
+    }else{
+        dropzone.appendChild(game.dragged);
+            return;
+    }  
+    }  
+}/*
+ dropzone.appendChild(game.dragged);
+            return;
+ if (e.currentTarget.classList.contains("frog")){
+        if (game.dragged.children[0].src.includes("images/f")){
+            e.preventDefault()
+        }else{
+            alert("You can't place this card here!")
+        }
+        
+    }else if(e.currentTarget.classList.contains("butterfly")){
+        if(game.dragged.children[0].src.includes("images/f")){
+            alert("You can't place this card here!")
+        }else{
+            e.preventDefault() 
+        }
+    }else{
+        e.preventDefault()
     }
-    
+*/
+function distinguishDropzones(){
+    document.querySelector(".life-cycles").children[0].querySelectorAll(".card-slot").forEach((slot)=>{
+        slot.classList.add("frog")
+    });
+    document.querySelector(".life-cycles").children[1].querySelectorAll(".card-slot").forEach((slot)=>{
+        slot.classList.add("butterfly")
+    });
+
+    //.querySelectorAll(".card-slot").forEach(function(slot){
+       // slot.classList.add("frog")
+    //});
+    // document.querySelector(".butterfly metamorphosis-container")//.querySelectorAll(".card-slot").forEach(function(slot){
+    //     slot.classList.add("butterfly")
+    // });
+        
 }
 
 function getDropzoneInCardContainer(){
         let newSlot = document.createElement("div")
         newSlot.className = "card-slot"
+        newSlot.classList.add("box")
         ui.mixedCardsContainer.appendChild(newSlot)
         initDropzone(newSlot)
 }
