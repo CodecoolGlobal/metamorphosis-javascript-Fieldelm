@@ -41,10 +41,6 @@ body {
 .card-slot {
     min-height: 120px;
     min-width: 150px;
-/* }
-
-.card-slot:empty { */
-    /*This only works if the tag is really empty and there is not even whitespace inside*/
     border: 4px solid #cdcdcd;
     margin: 2px;
     border-radius: var(--border-radius);
@@ -77,4 +73,11 @@ body {
 .transparent{
     opacity: 0.3;
 
+}
+
+.frog{
+    border-color:palegreen;
+}
+.butterfly{
+    border-color: lightsalmon;
 }

@@ -25,17 +25,13 @@ function initDragAndDrop() {
     initElements();
     shuffleCards();
     initDragEvents();
-    
-    // if (document.querySelectorAll(".frog .butterfly").length === ui.cardsAmount){
-    //     if (checkWin()){
-    //         win
-    //     }
-    // }
+   
 }
 
 function win(){
     alert("Congrats, you won!")
-    window.location.reload()
+    setTimeout(()=>window.location.reload(), 2000)
+    
 
 }
 
@@ -58,6 +54,7 @@ function shuffleCards() {
 }
 
 function initDragEvents() {
+    
     ui.cards.forEach(function (card) {
         initDraggable(card);
     });
@@ -69,11 +66,10 @@ function initDragEvents() {
 }
 
 function initDraggable(draggable) {
+
     draggable.setAttribute("draggable", true);
     draggable.addEventListener("dragstart", handleDragStart);
     draggable.addEventListener("dragstart", visualDragStart);
-
-    //draggable.addEventListener("dragstart",)
     draggable.addEventListener("dragend", handleDragEnd);
     draggable.addEventListener("dragend", visualDragEnd)
     }
@@ -132,6 +128,7 @@ function handleDrop(e) {
     if (e.currentTarget.classList.contains("frog")){
         if (game.dragged.children[0].src.includes("images/f")){
             dropzone.appendChild(game.dragged);
+            
             return;
         }else{
             alert("You can't place this card here!")
@@ -141,34 +138,16 @@ function handleDrop(e) {
         if(game.dragged.children[0].src.includes("images/f")){
             alert("You can't place this card here!")
         }else{
-            dropzone.appendChild(game.dragged);
+            dropzone.appendChild(game.dragged)
             return;
         }
     }else{
         dropzone.appendChild(game.dragged);
-            return;
+        return;
     }  
-    }  
-}/*
- dropzone.appendChild(game.dragged);
-            return;
- if (e.currentTarget.classList.contains("frog")){
-        if (game.dragged.children[0].src.includes("images/f")){
-            e.preventDefault()
-        }else{
-            alert("You can't place this card here!")
-        }
-        
-    }else if(e.currentTarget.classList.contains("butterfly")){
-        if(game.dragged.children[0].src.includes("images/f")){
-            alert("You can't place this card here!")
-        }else{
-            e.preventDefault() 
-        }
-    }else{
-        e.preventDefault()
     }
-*/
+      
+}
 function distinguishDropzones(){
     document.querySelector(".life-cycles").children[0].querySelectorAll(".card-slot").forEach((slot)=>{
         slot.classList.add("frog")
@@ -176,14 +155,6 @@ function distinguishDropzones(){
     document.querySelector(".life-cycles").children[1].querySelectorAll(".card-slot").forEach((slot)=>{
         slot.classList.add("butterfly")
     });
-
-    //.querySelectorAll(".card-slot").forEach(function(slot){
-       // slot.classList.add("frog")
-    //});
-    // document.querySelector(".butterfly metamorphosis-container")//.querySelectorAll(".card-slot").forEach(function(slot){
-    //     slot.classList.add("butterfly")
-    // });
-        
 }
 
 function getDropzoneInCardContainer(){
@@ -232,8 +203,6 @@ function checkWin(){
     }
 
 }
-
-
 
 initDragAndDrop();
 
